@@ -217,3 +217,8 @@ https://healthcare-wellness.onrender.com/api/auth/register
 
 // get profile by id (Get) Method
 https://healthcare-wellness.onrender.com/api/profile?id=67b98b0ac19e6f056f7652d7
+
+
+// update profile
+// get profile by id (Put) Method
+https://healthcare-wellness.onrender.com/api/profile?id=67b98b0ac19e6f056f7652d7
