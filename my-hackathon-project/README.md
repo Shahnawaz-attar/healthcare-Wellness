@@ -222,3 +222,44 @@ https://healthcare-wellness.onrender.com/api/profile?id=67b98b0ac19e6f056f7652d7
 // update profile
 // get profile by id (Put) Method
 https://healthcare-wellness.onrender.com/api/profile?id=67b98b0ac19e6f056f7652d7
+
+
+
+
+// goals
+http://localhost:4000/api/goals
+//add
+{
+  "title": "Walk 10,000 steps",
+  "targetDate": "2024-12-31T00:00:00.000Z"
+}
+
+
+
+update
+/goals/67b9a6c025e5c8785ec2618e
+{
+  "title": "Walk 12,000 steps",
+  "targetDate": "2025-01-15T00:00:00.000Z",
+  "progress": "50%"
+}
+
+
+//get A single Goal
+/goals?goalId=67b9a6c025e5c8785ec2618e
+
+
+//delete goal
+/api/goals/:goalId
+
+
+// get goals by patient for perviderOnly
+api/goals/patients
+
+
+//update goals by provider
+goals/patient/:patientId/:goalId
+{
+  "status": "Completed"
+}
+

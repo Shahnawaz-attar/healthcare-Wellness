@@ -7,6 +7,7 @@ import { connectDB } from "./config/dbConfig";
 import authRoutes from "./routes/authRoutes";
 import patientRoutes from "./routes/patientRoutes";
 import profileRoutes from './routes/profileRoutes';
+import goalRoutes from "./routes/goalRoutes";
 
 dotenv.config();
 
@@ -23,6 +24,8 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/patient", patientRoutes);
 app.use('/api/profile', profileRoutes);
+app.use("/api/goals", goalRoutes);
+
 
 
 const PORT = process.env.PORT || 4000;
