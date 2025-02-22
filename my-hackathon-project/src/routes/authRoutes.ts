@@ -28,6 +28,55 @@ const router = express.Router();
  * Optional fields for Provider (when role is provided as "provider"):
  *   "specialty": "Cardiology"
  */
+
+/**
+ * @swagger
+ * /api/auth/register:
+ *   post:
+ *     summary: Register a new user
+ *     description: Registers a new user (Patient or Provider). If no role is provided, the default is Patient.
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       description: User registration data
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Jane Doe
+ *               email:
+ *                 type: string
+ *                 example: jane.doe@example.com
+ *               password:
+ *                 type: string
+ *                 example: password123
+ *               role:
+ *                 type: string
+ *                 example: provider
+ *               specialty:
+ *                 type: string
+ *                 example: Cardiology
+ *     responses:
+ *       201:
+ *         description: User registered successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 token:
+ *                   type: string
+ */
 router.post('/register', async (req:Request, res:any) => {
   try {
     const {
@@ -99,6 +148,45 @@ router.post('/register', async (req:Request, res:any) => {
  *   "email": "jane.doe@example.com",
  *   "password": "password123"
  * }
+ */
+
+/**
+ * @swagger
+ * /api/auth/login:
+ *   post:
+ *     summary: Login an existing user
+ *     description: Logs in a user and returns a JWT token.
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       description: User credentials
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: jane.doe@example.com
+ *               password:
+ *                 type: string
+ *                 example: password123
+ *     responses:
+ *       200:
+ *         description: Successful login
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *       400:
+ *         description: Invalid credentials
  */
 router.post('/login', async (req:Request, res:any) => {
   try {

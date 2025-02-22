@@ -11,6 +11,48 @@ const router = express.Router();
  * @desc    Add a new goal (Only Patients)
  * @access  Private (Patients Only)
  */
+
+/**
+ * @swagger
+ * /api/goals:
+ *   post:
+ *     summary: Add a new goal
+ *     description: Allows a patient to add a new goal.
+ *     tags:
+ *       - Goals
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       description: Goal details
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - targetDate
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: Walk 10,000 steps
+ *               targetDate:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2024-12-31T00:00:00.000Z"
+ *     responses:
+ *       201:
+ *         description: Goal added successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 goals:
+ *                   type: array
+ */
 router.post(
     "/",
     protect,
@@ -60,6 +102,70 @@ router.post(
    * @desc    Edit a goal (Only Patients)
    * @access  Private (Patients Only)
    */
+
+  /**
+ * @swagger
+ * /api/goals/{goalId}:
+ *   put:
+ *     summary: Edit a goal
+ *     description: Allows a patient to edit one of their goals.
+ *     tags:
+ *       - Goals
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: goalId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The goal ID.
+ *     requestBody:
+ *       description: Fields to update in the goal.
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: Walk 12,000 steps
+ *               targetDate:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2025-01-15T00:00:00.000Z"
+ *               progress:
+ *                 type: string
+ *                 example: "50%"
+ *     responses:
+ *       200:
+ *         description: Goal updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 goal:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     title:
+ *                       type: string
+ *                     status:
+ *                       type: string
+ *                     targetDate:
+ *                       type: string
+ *                     progress:
+ *                       type: string
+ *       403:
+ *         description: Only patients can edit their goals.
+ *       404:
+ *         description: Patient or goal not found.
+ */
   router.put(
     "/:goalId",
     protect,
@@ -105,6 +211,45 @@ router.post(
    * @desc    Get all goals of the logged-in patient
    * @access  Private (Patients Only)
    */
+
+  /**
+ * @swagger
+ * /api/goals:
+ *   get:
+ *     summary: Get all goals
+ *     description: Retrieves all goals of the logged-in patient.
+ *     tags:
+ *       - Goals
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: A list of goals.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 goals:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       title:
+ *                         type: string
+ *                       status:
+ *                         type: string
+ *                       targetDate:
+ *                         type: string
+ *                       progress:
+ *                         type: string
+ *       403:
+ *         description: Only patients can view their goals.
+ *       404:
+ *         description: Patient not found.
+ */
   router.get(
     "/",
     protect,
@@ -135,6 +280,55 @@ router.post(
    * @desc    Get goals of all patients assigned to the provider
    * @access  Private (Providers Only)
    */
+
+
+/**
+ * @swagger
+ * /api/goals/patients:
+ *   get:
+ *     summary: Get all patient goals for a provider
+ *     description: Allows a provider to retrieve the goals of all their assigned patients.
+ *     tags:
+ *       - Goals
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: A list of patient goals.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 patientGoals:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       patientId:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *                       goals:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             _id:
+ *                               type: string
+ *                             title:
+ *                               type: string
+ *                             status:
+ *                               type: string
+ *                             targetDate:
+ *                               type: string
+ *                             progress:
+ *                               type: string
+ *       403:
+ *         description: Only providers can view patient goals.
+ *       404:
+ *         description: Provider not found.
+ */
   router.get(
     "/patients",
     protect,
@@ -174,6 +368,72 @@ router.post(
    * @desc    Update a patient's goal status (Only Providers)
    * @access  Private (Providers Only)
    */
+
+  /**
+ * @swagger
+ * /api/goals/patient/{patientId}/{goalId}:
+ *   put:
+ *     summary: Update a patient's goal status
+ *     description: Allows a provider to update the status of a patient's goal.
+ *     tags:
+ *       - Goals
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: patientId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The patient's ID.
+ *       - in: path
+ *         name: goalId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The goal's ID.
+ *     requestBody:
+ *       description: New status for the goal.
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 enum: [Pending, Completed, Missed]
+ *                 example: Completed
+ *     responses:
+ *       200:
+ *         description: Goal status updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 goal:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     title:
+ *                       type: string
+ *                     status:
+ *                       type: string
+ *                     targetDate:
+ *                       type: string
+ *                     progress:
+ *                       type: string
+ *       400:
+ *         description: Invalid status value.
+ *       403:
+ *         description: Only providers can update goal status.
+ *       404:
+ *         description: Patient or goal not found.
+ */
   router.put(
     "/patient/:patientId/:goalId",
     protect,

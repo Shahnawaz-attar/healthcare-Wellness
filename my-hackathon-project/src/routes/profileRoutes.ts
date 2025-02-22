@@ -11,6 +11,32 @@ const router = express.Router();
  * @desc    Get the authenticated user's profile (excluding password)
  * @access  Private
  */
+
+/**
+ * @swagger
+ * /api/profile:
+ *   get:
+ *     summary: Get profile by ID
+ *     description: Retrieves a user's profile by their ID.
+ *     tags:
+ *       - Profile
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: User ID
+ *     responses:
+ *       200:
+ *         description: The user profile
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *       404:
+ *         description: User not found
+ */
 router.get('/', protect, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     // Find user by ID attached in req.user (decoded from JWT)
@@ -32,6 +58,57 @@ router.get('/', protect, async (req: AuthRequest, res: Response): Promise<void> 
  *
  * For Patients, allowed fields might include: name, age, allergies, currentMedications.
  * For Providers, allowed fields might include: name, specialty.
+ */
+
+
+/**
+ * @swagger
+ * /api/profile:
+ *   put:
+ *     summary: Update the user's profile
+ *     description: Updates the authenticated user's profile with the provided data and returns the updated profile.
+ *     tags:
+ *       - Profile
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       description: The profile fields to update.
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Jane Doe
+ *               email:
+ *                 type: string
+ *                 example: jane.doe@example.com
+ *     responses:
+ *       200:
+ *         description: Profile updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Profile updated successfully
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     name:
+ *                       type: string
+ *                     email:
+ *                       type: string
+ *       404:
+ *         description: User not found.
+ *       500:
+ *         description: Server error.
  */
 router.put('/', protect, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
