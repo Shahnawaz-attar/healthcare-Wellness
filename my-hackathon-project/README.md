@@ -213,3 +213,7 @@ https://healthcare-wellness.onrender.com/api/auth/register
   "email": "jane.doe@example.com",
   "password": "password123"
 }
+
+
+// get profile by id (Get) Method
+https://healthcare-wellness.onrender.com/api/profile?id=67b98b0ac19e6f056f7652d7
