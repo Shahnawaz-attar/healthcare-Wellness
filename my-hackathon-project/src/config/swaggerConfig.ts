@@ -1,6 +1,7 @@
 // swaggerConfig.js
+import type { Options } from "swagger-jsdoc";
 
-const swaggerOptions = {
+const swaggerOptions : Options = {
     definition: {
       openapi: "3.0.0",
       info: {
@@ -22,5 +23,5 @@ const swaggerOptions = {
     apis: ["./src/routes/*.js", "./src/routes/*.ts"], // Adjust the path to match your route files
   };
   
-module.exports = swaggerOptions
+  export default swaggerOptions;
   

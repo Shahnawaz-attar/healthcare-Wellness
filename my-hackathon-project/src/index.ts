@@ -16,7 +16,7 @@ const swaggerUi = require("swagger-ui-express");
 
 // import swaggerUi from "swagger-ui-express";
 
-import swaggerOptions from "../swaggerConfig"; // adjust the path as needed
+import swaggerOptions from "./config/swaggerConfig";
 
 
 
