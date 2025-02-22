@@ -1,4 +1,3 @@
-// src/middleware/authMiddleware.ts
 
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
@@ -11,11 +10,7 @@ export interface AuthRequest extends Request {
 }
 
 
-/**
- * Middleware to protect routes.
- * Checks for a Bearer token, verifies it, and attaches the decoded payload to req.user.
- * Returns void.
- */
+
 export const protect = (
   req: AuthRequest,
   res: Response,

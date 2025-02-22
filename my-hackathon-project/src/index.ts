@@ -8,6 +8,8 @@ import authRoutes from "./routes/authRoutes";
 import patientRoutes from "./routes/patientRoutes";
 import profileRoutes from './routes/profileRoutes';
 import goalRoutes from "./routes/goalRoutes";
+import tipRoutes from "./routes/tipRoutes";  // <-- Import tip routes
+
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
@@ -36,6 +38,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/patient", patientRoutes);
 app.use('/api/profile', profileRoutes);
 app.use("/api/goals", goalRoutes);
+app.use("/api/tips", tipRoutes);  // <-- Mount tip routes
+
 
 // Set up Swagger docs
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
