@@ -10,11 +10,14 @@ COPY my-hackathon-project/package.json my-hackathon-project/package-lock.json ./
 # Install dependencies
 RUN npm install
 
-# Copy all project files from my-hackathon-project
+# Copy all project files
 COPY my-hackathon-project ./
 
-# Expose port (adjust based on your app)
+# Build TypeScript (if applicable)
+RUN npm run build
+
+# Expose port
 EXPOSE 4000
 
 # Command to run the app
-CMD ["npm", "start"]
+CMD ["node", "dist/index.js"]
