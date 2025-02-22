@@ -196,3 +196,20 @@ architechture
 best practiices
 deployment startigy
 test cases
+
+
+
+api
+https://healthcare-wellness.onrender.com/api/auth/login
+{
+  "email": "jane.doe@example.com",
+  "password": "password123"
+}
+
+
+https://healthcare-wellness.onrender.com/api/auth/register
+{
+  "name": "Jane Doe",
+  "email": "jane.doe@example.com",
+  "password": "password123"
+}
